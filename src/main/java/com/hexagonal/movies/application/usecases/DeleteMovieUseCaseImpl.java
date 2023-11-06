@@ -4,6 +4,7 @@ import com.hexagonal.movies.domain.ports.in.DeleteMovieUseCase;
 import com.hexagonal.movies.domain.ports.out.MovieRepositoryPort;
 
 public class DeleteMovieUseCaseImpl implements DeleteMovieUseCase{
+    
     private final MovieRepositoryPort movieRepositoryPort;
 
     public DeleteMovieUseCaseImpl(MovieRepositoryPort movieRepositoryPort) {

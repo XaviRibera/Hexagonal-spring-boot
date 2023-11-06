@@ -16,8 +16,10 @@ public class MovieService implements CreateMovieUseCase,DeleteMovieUseCase,Retri
     private final RetrieveMovieUseCase retriveMovieUseCase;
     private final UpdateMovieUseCase updateMovieUseCase;
 
-    public MovieService(CreateMovieUseCase createMovieUseCase, DeleteMovieUseCase deleteMovieUseCase,
-            RetrieveMovieUseCase retriveMovieUseCase, UpdateMovieUseCase updateMovieUseCase) {
+    public MovieService(CreateMovieUseCase createMovieUseCase,
+                        DeleteMovieUseCase deleteMovieUseCase,
+                        RetrieveMovieUseCase retriveMovieUseCase,
+                        UpdateMovieUseCase updateMovieUseCase) {
         this.createMovieUseCase = createMovieUseCase;
         this.deleteMovieUseCase = deleteMovieUseCase;
         this.retriveMovieUseCase = retriveMovieUseCase;

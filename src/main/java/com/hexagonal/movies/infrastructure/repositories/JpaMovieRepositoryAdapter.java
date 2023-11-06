@@ -2,8 +2,7 @@ package com.hexagonal.movies.infrastructure.repositories;
 
 import java.util.List;
 import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.stream.Collectors;
 
 import com.hexagonal.movies.domain.models.Movie;
 import com.hexagonal.movies.domain.ports.out.MovieRepositoryPort;
@@ -11,9 +10,11 @@ import com.hexagonal.movies.infrastructure.entities.MovieEntity;
 
 public class JpaMovieRepositoryAdapter implements MovieRepositoryPort{
 
-    @Autowired
     private final JpaMovieRepository jpaMovieRepository;
-
+    
+    public JpaMovieRepositoryAdapter(JpaMovieRepository jpaMovieRepository) {
+        this.jpaMovieRepository = jpaMovieRepository;
+    }
 
     @Override
     public Movie save(Movie movie) {
@@ -24,25 +25,35 @@ public class JpaMovieRepositoryAdapter implements MovieRepositoryPort{
 
     @Override
     public Optional<Movie> findById(int id) {
-        return jpaMovieRepository.findById(id);
+        return jpaMovieRepository.findById(id).map(MovieEntity::toDamainModel);
     }
 
     @Override
     public List<Movie> getAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAll'");
+        return jpaMovieRepository.findAll().stream()
+                .map(MovieEntity::toDamainModel)
+                .collect(Collectors.toList());
     }
 
     @Override
     public Optional<Movie> update(Movie movie) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        if(jpaMovieRepository.existsById(movie.getId())){
+            MovieEntity movieEntity = MovieEntity.fromDomainModel(movie);
+            MovieEntity updateMovieEntity = jpaMovieRepository.save(movieEntity);
+            return Optional.of(updateMovieEntity.toDamainModel());
+        };
+
+        return Optional.empty();
     }
 
     @Override
     public boolean deleteById(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteById'");
+        if(jpaMovieRepository.existsById(id)){
+            jpaMovieRepository.deleteById(id);
+            return true;
+        }
+
+        return false;
     }
     
 }
