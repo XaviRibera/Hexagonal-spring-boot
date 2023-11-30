@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import com.hexagonal.movies.application.services.MovieService;
 import com.hexagonal.movies.application.usecases.*;
 import com.hexagonal.movies.domain.ports.out.MovieRepositoryPort;
+import com.hexagonal.movies.infrastructure.repositories.JpaMovieRepositoryAdapter;
 
 @Configuration
 public class ApplicationConfig {
@@ -18,5 +19,10 @@ public class ApplicationConfig {
             new RetriveMovieUseCaseImpl(movieRepositoryPort), 
             new UpdateMovieUseCaseImpl(movieRepositoryPort)
             );
+    }
+
+    @Bean
+    public MovieRepositoryPort movieRepositoryPort(JpaMovieRepositoryAdapter jpaMovieRepositoryAdapter){
+        return jpaMovieRepositoryAdapter;
     }
 }

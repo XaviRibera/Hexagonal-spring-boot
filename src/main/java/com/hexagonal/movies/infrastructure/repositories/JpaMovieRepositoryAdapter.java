@@ -2,7 +2,6 @@ package com.hexagonal.movies.infrastructure.repositories;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import com.hexagonal.movies.domain.models.Movie;
 import com.hexagonal.movies.domain.ports.out.MovieRepositoryPort;
@@ -32,7 +31,7 @@ public class JpaMovieRepositoryAdapter implements MovieRepositoryPort{
     public List<Movie> getAll() {
         return jpaMovieRepository.findAll().stream()
                 .map(MovieEntity::toDamainModel)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override

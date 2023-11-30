@@ -8,9 +8,11 @@ import javax.persistence.Id;
 import com.hexagonal.movies.domain.models.Movie;
 
 import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Getter
+@Setter
 public class MovieEntity {
     
     @Id
